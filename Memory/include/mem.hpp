@@ -1,16 +1,16 @@
 /**
  * @file mem.hpp
  * @brief Windows Process Memory Management Library
- * 
+ *
  * This header provides a comprehensive C++ wrapper for Windows process memory operations.
  * It includes functionality for process attachment, memory reading/writing, pattern scanning,
  * and pointer chain traversal. The library is designed for educational purposes and legitimate
  * debugging/reverse engineering tasks.
- * 
+ *
  * @note This library requires Windows API and appropriate process privileges.
  * @note All memory operations may throw std::runtime_error on failure.
- * 
- * @author edoardohb
+ *
+ * @author edohb
  * @version 1.0
  */
 
@@ -27,7 +27,7 @@
 
 /**
  * @brief A 3D vector structure for representing spatial coordinates
- * 
+ *
  * This structure represents a three-dimensional vector with floating-point components.
  * Commonly used for position, velocity, or direction vectors in 3D applications.
  */
@@ -40,7 +40,7 @@ struct Vector3 {
      * @brief Default constructor initializing all components to zero
      */
     Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
-    
+
     /**
      * @brief Parameterized constructor
      * @param x X-component value
@@ -52,14 +52,14 @@ struct Vector3 {
 
 /**
  * @brief Windows Process Memory Management Class
- * 
+ *
  * The Mem class provides a comprehensive interface for interacting with Windows process memory.
  * It supports process attachment, memory reading/writing operations, pointer chain traversal,
  * pattern scanning, and various data type operations.
- * 
+ *
  * @note This class requires appropriate process privileges to access target process memory.
  * @note All operations may throw std::runtime_error on failure.
- * 
+ *
  * @example
  * ```cpp
  * try {
@@ -101,7 +101,7 @@ public:
      * @brief Constructor that attaches to a process by name
      * @param procName Name of the process to attach to (e.g., "notepad.exe")
      * @throws std::runtime_error if the process cannot be found or attached
-     * 
+     *
      * @example
      * ```cpp
      * Mem mem("notepad.exe"); // Attaches to notepad.exe
@@ -118,23 +118,23 @@ public:
      * @brief Sets/changes the target process
      * @param procName Name of the process to attach to
      * @return true if successful, false otherwise
-     * 
+     *
      * @note This method can be used to switch between different processes
      */
     bool SetProcess(const std::string& procName);
-    
+
     /**
      * @brief Gets the process handle
      * @return Handle to the target process
      */
     HANDLE GetProcessHandle() const { return processHandle; }
-    
+
     /**
      * @brief Gets the process ID
      * @return Process ID of the target process
      */
     DWORD GetProcessId() const { return processId; }
-    
+
     /**
      * @brief Gets the process name
      * @return Name of the target process
@@ -146,7 +146,7 @@ public:
      * @param moduleName Name of the module (e.g., "kernel32.dll", "notepad.exe")
      * @return Base address of the module, or 0 if not found
      * @throws std::runtime_error if module name is empty or process is invalid
-     * 
+     *
      * @note For the main executable, you can use the process name or it will be found as the first module
      */
     uintptr_t GetModuleBaseAddress(const std::string& moduleName);
@@ -158,7 +158,7 @@ public:
      * @throws std::runtime_error if memory read fails
      */
     uintptr_t ReadPointer(uintptr_t address);
-    
+
     /**
      * @brief Reads a pointer value from memory with offset
      * @param address Base memory address
@@ -167,14 +167,14 @@ public:
      * @throws std::runtime_error if memory read fails
      */
     uintptr_t ReadPointer(uintptr_t address, int offset);
-    
+
     /**
      * @brief Reads a pointer following a chain of offsets (pointer traversal)
      * @param address Starting memory address
      * @param offsets Vector of offsets to follow through the pointer chain
      * @return Final pointer value after following the complete chain
      * @throws std::runtime_error if any memory read in the chain fails
-     * 
+     *
      * @note This is useful for accessing nested data structures or multi-level pointers
      * @example
      * ```cpp
@@ -193,7 +193,7 @@ public:
      * @return Final pointer value
      */
     uintptr_t ReadPointer(uintptr_t address, int offset1, int offset2);
-    
+
     /**
      * @brief Convenience overload for 3-level pointer chain
      * @param address Starting address
@@ -203,7 +203,7 @@ public:
      * @return Final pointer value
      */
     uintptr_t ReadPointer(uintptr_t address, int offset1, int offset2, int offset3);
-    
+
     /**
      * @brief Convenience overload for 4-level pointer chain
      * @param address Starting address
@@ -214,7 +214,7 @@ public:
      * @return Final pointer value
      */
     uintptr_t ReadPointer(uintptr_t address, int offset1, int offset2, int offset3, int offset4);
-    
+
     /**
      * @brief Convenience overload for 5-level pointer chain
      * @param address Starting address
@@ -226,7 +226,7 @@ public:
      * @return Final pointer value
      */
     uintptr_t ReadPointer(uintptr_t address, int offset1, int offset2, int offset3, int offset4, int offset5);
-    
+
     /**
      * @brief Convenience overload for 6-level pointer chain
      * @param address Starting address
@@ -239,7 +239,7 @@ public:
      * @return Final pointer value
      */
     uintptr_t ReadPointer(uintptr_t address, int offset1, int offset2, int offset3, int offset4, int offset5, int offset6);
-    
+
     /**
      * @brief Convenience overload for 7-level pointer chain
      * @param address Starting address
@@ -260,11 +260,11 @@ public:
      * @param size Number of bytes to read
      * @return Vector containing the read bytes
      * @throws std::runtime_error if memory read fails
-     * 
+     *
      * @note The returned vector size may be smaller than requested if fewer bytes were read
      */
     std::vector<uint8_t> ReadBytes(uintptr_t address, size_t size);
-    
+
     /**
      * @brief Reads raw bytes from memory with offset
      * @param address Base memory address
@@ -282,7 +282,7 @@ public:
      * @throws std::runtime_error if memory read fails
      */
     int ReadInt(uintptr_t address);
-    
+
     /**
      * @brief Reads a 32-bit signed integer from memory with offset
      * @param address Base memory address
@@ -299,7 +299,7 @@ public:
      * @throws std::runtime_error if memory read fails
      */
     float ReadFloat(uintptr_t address);
-    
+
     /**
      * @brief Reads a 32-bit floating-point value from memory with offset
      * @param address Base memory address
@@ -314,11 +314,11 @@ public:
      * @param address Memory address to read from
      * @return Vector3 value containing x, y, z components
      * @throws std::runtime_error if memory read fails
-     * 
+     *
      * @note Assumes the Vector3 is stored as three consecutive 32-bit floats
      */
     Vector3 ReadVector3(uintptr_t address);
-    
+
     /**
      * @brief Reads a Vector3 structure from memory with offset
      * @param address Base memory address
@@ -335,7 +335,7 @@ public:
      * @throws std::runtime_error if memory read fails
      */
     short ReadShort(uintptr_t address);
-    
+
     /**
      * @brief Reads a 16-bit signed integer from memory with offset
      * @param address Base memory address
@@ -352,7 +352,7 @@ public:
      * @throws std::runtime_error if memory read fails
      */
     unsigned short ReadUShort(uintptr_t address);
-    
+
     /**
      * @brief Reads a 16-bit unsigned integer from memory with offset
      * @param address Base memory address
@@ -369,7 +369,7 @@ public:
      * @throws std::runtime_error if memory read fails
      */
     unsigned int ReadUInt(uintptr_t address);
-    
+
     /**
      * @brief Reads a 32-bit unsigned integer from memory with offset
      * @param address Base memory address
@@ -384,7 +384,7 @@ public:
      * @param address Memory address to read from
      * @return Vector containing 16 float values representing the 4x4 matrix
      * @throws std::runtime_error if memory read fails
-     * 
+     *
      * @note The matrix is read as 16 consecutive 32-bit floats
      * @note Matrix layout depends on the target application (row-major vs column-major)
      */
@@ -395,11 +395,11 @@ public:
      * @param address Memory address to write to
      * @param data Vector containing bytes to write
      * @return true if write was successful, false otherwise
-     * 
+     *
      * @note Requires appropriate write permissions to the target process
      */
     bool WriteBytes(uintptr_t address, const std::vector<uint8_t>& data);
-    
+
     /**
      * @brief Writes raw bytes to memory with offset
      * @param address Base memory address
@@ -416,7 +416,7 @@ public:
      * @return true if write was successful, false otherwise
      */
     bool WriteInt(uintptr_t address, int value);
-    
+
     /**
      * @brief Writes a 32-bit signed integer to memory with offset
      * @param address Base memory address
@@ -433,7 +433,7 @@ public:
      * @return true if write was successful, false otherwise
      */
     bool WriteShort(uintptr_t address, short value);
-    
+
     /**
      * @brief Writes a 16-bit signed integer to memory with offset
      * @param address Base memory address
@@ -450,7 +450,7 @@ public:
      * @return true if write was successful, false otherwise
      */
     bool WriteUShort(uintptr_t address, unsigned short value);
-    
+
     /**
      * @brief Writes a 16-bit unsigned integer to memory with offset
      * @param address Base memory address
@@ -467,7 +467,7 @@ public:
      * @return true if write was successful, false otherwise
      */
     bool WriteUInt(uintptr_t address, unsigned int value);
-    
+
     /**
      * @brief Writes a 32-bit unsigned integer to memory with offset
      * @param address Base memory address
@@ -482,11 +482,11 @@ public:
      * @param address Memory address to write to
      * @param value Vector3 value to write
      * @return true if write was successful, false otherwise
-     * 
+     *
      * @note Writes the Vector3 as three consecutive 32-bit floats (x, y, z)
      */
     bool WriteVector3(uintptr_t address, const Vector3& value);
-    
+
     /**
      * @brief Writes a Vector3 structure to memory with offset
      * @param address Base memory address
@@ -501,7 +501,7 @@ public:
      * @param address Memory address to write to
      * @param length Number of NOP bytes to write
      * @return true if write was successful, false otherwise
-     * 
+     *
      * @note This is commonly used for code patching to disable instructions
      * @note Each NOP instruction is a single byte with value 0x90
      */
@@ -513,23 +513,23 @@ public:
      * @param pattern Hexadecimal pattern string (e.g., "48 8B 05 ? ? ? ?")
      * @return Address where pattern was found, or 0 if not found
      * @throws std::runtime_error if module not found or pattern invalid
-     * 
+     *
      * @note Pattern should be space-separated hex bytes
      * @note Wildcards (? or ??) are not supported in this implementation
-     * 
+     *
      * @example
      * ```cpp
      * uintptr_t addr = mem.ScanPattern("game.exe", "48 8B 05 12 34 56 78");
      * ```
      */
     uintptr_t ScanPattern(const std::string& moduleName, const std::string& pattern);
-    
+
     /**
      * @brief Scans for a byte pattern within a byte array
      * @param haystack Byte array to search in
      * @param needle Byte pattern to search for
      * @return Index where pattern was found, or -1 if not found
-     * 
+     *
      * @note This is a helper function used internally by the string pattern scanner
      */
     int ScanPattern(const std::vector<uint8_t>& haystack, const std::vector<uint8_t>& needle);
@@ -537,7 +537,7 @@ public:
 
 /**
  * @brief Constructor implementation
- * 
+ *
  * Initializes the Mem object and attempts to attach to the specified process.
  * If the process cannot be found or attached, throws an exception.
  */
@@ -550,7 +550,7 @@ Mem::Mem(const std::string& procName)
 
 /**
  * @brief Destructor implementation
- * 
+ *
  * Properly closes the process handle to prevent resource leaks.
  */
 Mem::~Mem() {
@@ -561,10 +561,10 @@ Mem::~Mem() {
 
 /**
  * @brief Finds a process ID by process name using Windows Toolhelp API
- * 
+ *
  * Creates a snapshot of all running processes and searches for the specified
  * process name, converting from wide characters to UTF-8 for comparison.
- * 
+ *
  * @param processName The name of the process to find
  * @return The process ID if found, 0 otherwise
  */
@@ -596,10 +596,10 @@ DWORD Mem::FindProcessId(const std::string& processName) {
 
 /**
  * @brief Sets the target process for memory operations
- * 
+ *
  * Finds the process by name and opens a handle with full access rights.
  * This handle is used for all subsequent memory operations.
- * 
+ *
  * @param procName Name of the process to attach to
  * @return true if successful, false if process not found or access denied
  */
@@ -620,10 +620,10 @@ bool Mem::SetProcess(const std::string& procName) {
 
 /**
  * @brief Gets the base address of a module within the target process
- * 
+ *
  * Enumerates all modules in the target process and searches for the specified
  * module by name. Handles both DLL names and executable names.
- * 
+ *
  * @param moduleName Name of the module to find
  * @return Base address of the module, or 0 if not found
  * @throws std::runtime_error if module name is empty or process handle is invalid
@@ -662,10 +662,10 @@ uintptr_t Mem::GetModuleBaseAddress(const std::string& moduleName) {
 
 /**
  * @brief Template function to convert byte array to typed value
- * 
+ *
  * Safely converts a portion of a byte array to the specified type T.
  * Includes bounds checking to prevent buffer overruns.
- * 
+ *
  * @tparam T The type to convert to
  * @param bytes Byte array containing the data
  * @param offset Offset within the byte array
@@ -682,7 +682,7 @@ T Mem::BytesToValue(const std::vector<uint8_t>& bytes, size_t offset) {
 
 /**
  * @brief Reads a pointer value from memory
- * 
+ *
  * @param address Memory address to read from
  * @return Pointer value at the specified address
  */
@@ -693,7 +693,7 @@ uintptr_t Mem::ReadPointer(uintptr_t address) {
 
 /**
  * @brief Reads a pointer value from memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @return Pointer value at the specified address + offset
@@ -705,10 +705,10 @@ uintptr_t Mem::ReadPointer(uintptr_t address, int offset) {
 
 /**
  * @brief Reads a pointer following a chain of offsets
- * 
+ *
  * Traverses through a pointer chain by following each offset in sequence.
  * Each step dereferences the current address plus offset to get the next address.
- * 
+ *
  * @param address Starting memory address
  * @param offsets Vector of offsets to follow through the pointer chain
  * @return Final pointer value after following the complete chain
@@ -765,7 +765,7 @@ uintptr_t Mem::ReadPointer(uintptr_t address, int offset1, int offset2, int offs
 
 /**
  * @brief Reads raw bytes from memory using Windows ReadProcessMemory API
- * 
+ *
  * @param address Memory address to read from
  * @param size Number of bytes to read
  * @return Vector containing the read bytes
@@ -786,7 +786,7 @@ std::vector<uint8_t> Mem::ReadBytes(uintptr_t address, size_t size) {
 
 /**
  * @brief Reads raw bytes from memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @param size Number of bytes to read
@@ -798,7 +798,7 @@ std::vector<uint8_t> Mem::ReadBytes(uintptr_t address, int offset, size_t size) 
 
 /**
  * @brief Reads a 32-bit signed integer from memory
- * 
+ *
  * @param address Memory address to read from
  * @return Integer value at the specified address
  */
@@ -809,7 +809,7 @@ int Mem::ReadInt(uintptr_t address) {
 
 /**
  * @brief Reads a 32-bit signed integer from memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @return Integer value at the specified address + offset
@@ -820,7 +820,7 @@ int Mem::ReadInt(uintptr_t address, int offset) {
 
 /**
  * @brief Reads a 32-bit floating-point value from memory
- * 
+ *
  * @param address Memory address to read from
  * @return Float value at the specified address
  */
@@ -831,7 +831,7 @@ float Mem::ReadFloat(uintptr_t address) {
 
 /**
  * @brief Reads a 32-bit floating-point value from memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @return Float value at the specified address + offset
@@ -842,9 +842,9 @@ float Mem::ReadFloat(uintptr_t address, int offset) {
 
 /**
  * @brief Reads a Vector3 structure from memory
- * 
+ *
  * Reads three consecutive 32-bit floats and constructs a Vector3 object.
- * 
+ *
  * @param address Memory address to read from
  * @return Vector3 value containing x, y, z components
  */
@@ -859,7 +859,7 @@ Vector3 Mem::ReadVector3(uintptr_t address) {
 
 /**
  * @brief Reads a Vector3 structure from memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @return Vector3 value containing x, y, z components
@@ -870,7 +870,7 @@ Vector3 Mem::ReadVector3(uintptr_t address, int offset) {
 
 /**
  * @brief Reads a 16-bit signed integer from memory
- * 
+ *
  * @param address Memory address to read from
  * @return Short value at the specified address
  */
@@ -881,7 +881,7 @@ short Mem::ReadShort(uintptr_t address) {
 
 /**
  * @brief Reads a 16-bit signed integer from memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @return Short value at the specified address + offset
@@ -892,7 +892,7 @@ short Mem::ReadShort(uintptr_t address, int offset) {
 
 /**
  * @brief Reads a 16-bit unsigned integer from memory
- * 
+ *
  * @param address Memory address to read from
  * @return Unsigned short value at the specified address
  */
@@ -903,7 +903,7 @@ unsigned short Mem::ReadUShort(uintptr_t address) {
 
 /**
  * @brief Reads a 16-bit unsigned integer from memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @return Unsigned short value at the specified address + offset
@@ -914,7 +914,7 @@ unsigned short Mem::ReadUShort(uintptr_t address, int offset) {
 
 /**
  * @brief Reads a 32-bit unsigned integer from memory
- * 
+ *
  * @param address Memory address to read from
  * @return Unsigned integer value at the specified address
  */
@@ -925,7 +925,7 @@ unsigned int Mem::ReadUInt(uintptr_t address) {
 
 /**
  * @brief Reads a 32-bit unsigned integer from memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @return Unsigned integer value at the specified address + offset
@@ -936,9 +936,9 @@ unsigned int Mem::ReadUInt(uintptr_t address, int offset) {
 
 /**
  * @brief Reads a 4x4 matrix from memory
- * 
+ *
  * Reads 16 consecutive 32-bit floats representing a 4x4 transformation matrix.
- * 
+ *
  * @param address Memory address to read from
  * @return Vector containing 16 float values representing the 4x4 matrix
  */
@@ -955,7 +955,7 @@ std::vector<float> Mem::ReadMatrix4x4(uintptr_t address) {
 
 /**
  * @brief Writes raw bytes to memory using Windows WriteProcessMemory API
- * 
+ *
  * @param address Memory address to write to
  * @param data Vector containing bytes to write
  * @return true if write was successful, false otherwise
@@ -968,7 +968,7 @@ bool Mem::WriteBytes(uintptr_t address, const std::vector<uint8_t>& data) {
 
 /**
  * @brief Writes raw bytes to memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @param data Vector containing bytes to write
@@ -980,7 +980,7 @@ bool Mem::WriteBytes(uintptr_t address, int offset, const std::vector<uint8_t>& 
 
 /**
  * @brief Writes a 32-bit signed integer to memory
- * 
+ *
  * @param address Memory address to write to
  * @param value Integer value to write
  * @return true if write was successful, false otherwise
@@ -993,7 +993,7 @@ bool Mem::WriteInt(uintptr_t address, int value) {
 
 /**
  * @brief Writes a 32-bit signed integer to memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @param value Integer value to write
@@ -1005,7 +1005,7 @@ bool Mem::WriteInt(uintptr_t address, int offset, int value) {
 
 /**
  * @brief Writes a 16-bit signed integer to memory
- * 
+ *
  * @param address Memory address to write to
  * @param value Short value to write
  * @return true if write was successful, false otherwise
@@ -1018,7 +1018,7 @@ bool Mem::WriteShort(uintptr_t address, short value) {
 
 /**
  * @brief Writes a 16-bit signed integer to memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @param value Short value to write
@@ -1030,7 +1030,7 @@ bool Mem::WriteShort(uintptr_t address, int offset, short value) {
 
 /**
  * @brief Writes a 16-bit unsigned integer to memory
- * 
+ *
  * @param address Memory address to write to
  * @param value Unsigned short value to write
  * @return true if write was successful, false otherwise
@@ -1043,7 +1043,7 @@ bool Mem::WriteUShort(uintptr_t address, unsigned short value) {
 
 /**
  * @brief Writes a 16-bit unsigned integer to memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @param value Unsigned short value to write
@@ -1055,7 +1055,7 @@ bool Mem::WriteUShort(uintptr_t address, int offset, unsigned short value) {
 
 /**
  * @brief Writes a 32-bit unsigned integer to memory
- * 
+ *
  * @param address Memory address to write to
  * @param value Unsigned integer value to write
  * @return true if write was successful, false otherwise
@@ -1068,7 +1068,7 @@ bool Mem::WriteUInt(uintptr_t address, unsigned int value) {
 
 /**
  * @brief Writes a 32-bit unsigned integer to memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @param value Unsigned integer value to write
@@ -1080,9 +1080,9 @@ bool Mem::WriteUInt(uintptr_t address, int offset, unsigned int value) {
 
 /**
  * @brief Writes a Vector3 structure to memory
- * 
+ *
  * Writes the Vector3 as three consecutive 32-bit floats (x, y, z).
- * 
+ *
  * @param address Memory address to write to
  * @param value Vector3 value to write
  * @return true if write was successful, false otherwise
@@ -1097,7 +1097,7 @@ bool Mem::WriteVector3(uintptr_t address, const Vector3& value) {
 
 /**
  * @brief Writes a Vector3 structure to memory with offset
- * 
+ *
  * @param address Base memory address
  * @param offset Offset to add to the address
  * @param value Vector3 value to write
@@ -1109,10 +1109,10 @@ bool Mem::WriteVector3(uintptr_t address, int offset, const Vector3& value) {
 
 /**
  * @brief Writes NOP instructions (0x90) to memory
- * 
+ *
  * Creates an array of NOP instructions and writes them to the specified address.
  * This is commonly used for code patching to disable instructions.
- * 
+ *
  * @param address Memory address to write to
  * @param length Number of NOP bytes to write
  * @return true if write was successful, false otherwise
@@ -1124,15 +1124,15 @@ bool Mem::WriteNop(uintptr_t address, size_t length) {
 
 /**
  * @brief Scans for a byte pattern within a module's memory
- * 
+ *
  * Searches for a hexadecimal byte pattern within the specified module.
  * The pattern string should contain space-separated hexadecimal bytes.
- * 
+ *
  * @param moduleName Name of the module to search in
  * @param pattern Hexadecimal pattern string (e.g., "48 8B 05 12 34 56 78")
  * @return Address where pattern was found, or 0 if not found
  * @throws std::runtime_error if module not found or module information unavailable
- * 
+ *
  * @note Wildcards are not supported in this implementation
  * @note Pattern matching is exact byte-for-byte comparison
  */
@@ -1168,14 +1168,14 @@ uintptr_t Mem::ScanPattern(const std::string& moduleName, const std::string& pat
 
 /**
  * @brief Scans for a byte pattern within a byte array
- * 
+ *
  * Performs a linear search for the needle pattern within the haystack array.
  * Uses exact byte-for-byte comparison to find matches.
- * 
+ *
  * @param haystack Byte array to search in
  * @param needle Byte pattern to search for
  * @return Index where pattern was found, or -1 if not found
- * 
+ *
  * @note This is a helper function used internally by the string pattern scanner
  * @note Uses simple linear search algorithm - O(n*m) complexity
  */
