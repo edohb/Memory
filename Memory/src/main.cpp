@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include "mem.hpp"
 
+// Usage example - Credits to swedz: https://www.youtube.com/watch?v=BPQ_amHTF0Q
+
 int main() {
     Mem mem("popcapgame1.exe");
     unsigned int base = mem.GetModuleBaseAddress("popcapgame1.exe") + 0x0010C740;
@@ -26,7 +28,7 @@ int main() {
         std::cout << "Suns: " << suns << std::endl;
         int newSuns;
 
-        std::cout << "New suns (q to exit): ";
+        std::cout << "New suns (0 to exit): ";
         std::cin >> newSuns;
 
         if (newSuns <= 0) break;
